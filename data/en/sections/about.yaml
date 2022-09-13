@@ -1,0 +1,47 @@
+# section information
+section:
+  name: About
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+  template: sections/about.html
+
+# your designation
+designation: Product Management & Data Analyst
+# # your company information
+# company:
+#   name: Example Co.
+#   url: "https://www.example.com"
+
+# your resume. this file path should be relative to you "static" directory
+resume: "files/resume.pdf"
+
+# a summary about you
+summary: 'Introduction'
+
+# your social links
+# give as many as you want. use font-awesome for the icons.
+socialLinks:
+- name: Github
+  icon: "fab fa-github"
+  url: "https://www.github.com/iris-mingyudai/"
+- name: Instagram
+  icon: "fab fa-instagram"
+  url: "https://www.instagram.com/iris_mydai/"
+- name: LinkedIn
+  icon: "fab fa-linkedin"
+  url: "https://www.linkedin.com/in/mingyu-iris-dai/"
+# your soft skills
+# give the percentage between 50 to 100 with 5 intervals.
+# currently supported colors: blue, yellow, pink, green, sky, orange
+softSkills:
+- name: Product Management
+  percentage: 70
+  color: blue
+- name: Data Analytics
+  percentage: 60
+  color: yellow
+- name: GYM!
+  percentage: 60
+  color: orange
