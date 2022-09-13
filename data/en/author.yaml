@@ -7,7 +7,8 @@ image: "images/author/iris.jpg"
 # give your some contact information. they will be used in the footer
 contactInfo:
   email: "irisdmy@gmail.com"
-  phone: "+447831180484"
+  phone: "+44783118XXXX"
+  postcode: "NW1 XXX"
   # stack-overflow:
   #   icon: stack-overflow
   #   url: "https://stackoverflow.com/users/1/exampleUser"
