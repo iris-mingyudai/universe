@@ -4,8 +4,6 @@ languageCode: en-us
 title: "Iris Universe"
 theme: "toha"
 
-# Manage languages
-# For any more details, you can check the official documentation: https://gohugo.io/content-management/multilingual/
 languages:
   en:
     languageName: English
@@ -14,7 +12,7 @@ languages:
 # Control TOC depth
 markup:
   tableOfContents:
-    startLevel: 2
+    startLevel: 1
     endLevel: 6
     ordered: false
 
