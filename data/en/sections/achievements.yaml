@@ -1,6 +1,6 @@
 # section information
 section:
-  name: Updates
+  name: Greeting
   id: achievements
   enable: true
   weight: 6
