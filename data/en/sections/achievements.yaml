@@ -11,15 +11,15 @@ section:
 # achievements / updates
 # 4 at most!
 achievements: 
-- title: titlexxx
+- title: Yalla Yalla
   image: /images/sections/achievements/yallayalla.png
-  summary: summary here
+  summary: W1F 0HA, Lebanese kitchen in London.
+- title: 221B Baker St
+  image: /images/sections/achievements/holmes.jpg
+  summary: It's everything that I imagined it would be.
 - title: titlexxx
   image: /images/sections/achievements/holmes.jpg
   summary: summary here
 - title: titlexxx
-  image: /images/sections/achievements/temp1.jpg
-  summary: summary here
-- title: titlexxx
-  image: /images/sections/achievements/temp1.jpg
+  image: /images/sections/achievements/holmes.jpg
   summary: summary here

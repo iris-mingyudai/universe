@@ -56,9 +56,29 @@ library(infer)
 
 ## The Data
 
+```{r load_data}
+#read the CSV file
+bike <- read_csv(here::here("dataset", "london_bikes.csv"), 
+                 show_col_types = FALSE)
+```
+
+### Cleaning & EDA
+
+```{r skim}
+skimr::skim(bike)
+```
 
 
-### EDA
+```{r}
+# fix dates using lubridate, and generate new variables for year, month, month_name, day, and day_of _week
+bike <- bike %>%   
+  mutate(
+    year=year(day),
+    month = month(day),
+    month_name=month(day, label = TRUE),
+    day_of_week = wday(day, label = TRUE)) 
+```
+
 
 #### Challenge 1: Excess rentals in TfL bike sharing
 

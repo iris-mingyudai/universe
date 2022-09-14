@@ -27,6 +27,12 @@ output:
 ## The Data
 
 
+```r
+#read the CSV file
+bike <- read_csv(here::here("dataset", "london_bikes.csv"), 
+                 show_col_types = FALSE)
+```
+
 
 ### EDA
 
