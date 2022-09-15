@@ -52,6 +52,12 @@ library(countrycode)
 library(patchwork)
 library(gganimate)
 library(infer)
+library(GGally)
+library(broom)
+library(huxtable)
+library(car)
+library(performance)
+library(ggfortify)
 ```
 
 ## The Data
@@ -73,10 +79,75 @@ skimr::skim(bike)
 # fix dates using lubridate, and generate new variables for year, month, month_name, day, and day_of _week
 bike <- bike %>%   
   mutate(
-    year=year(day),
-    month = month(day),
-    month_name=month(day, label = TRUE),
-    day_of_week = wday(day, label = TRUE)) 
+    year=year(date),
+    month = month(date),
+    month_name=month(date, label = TRUE),
+    day_of_week = wday(date, label = TRUE)) %>% 
+  # generate new variable season_name to turn seasons from numbers to Winter, Spring, etc
+  mutate(
+    season_name = case_when(
+      month_name %in%  c("Dec", "Jan", "Feb")  ~ "Winter",
+      month_name %in%  c("Mar", "Apr", "May")  ~ "Spring",
+      month_name %in%  c("Jun", "Jul", "Aug")  ~ "Summer",
+      month_name %in%  c("Sep", "Oct", "Nov")  ~ "Autumn",
+    ),
+    season_name = factor(season_name, 
+                         levels = c("Winter", "Spring", "Summer", "Autumn"))
+  )
+
+skimr::skim(bike)
+```
+
+```{r model1_avg}
+model1 <- lm(bikes_hired~1, data = bike)
+msummary(model1)
+```
+
+```{r pairing}
+bike %>% 
+  select(cloud_cover, humidity, pressure, radiation, precipitation, sunshine, mean_temp, min_temp) %>%
+  ggpairs()
+```
+
+```{r model2}
+model2 <- lm(bikes_hired ~ mean_temp + humidity + pressure + radiation  + precipitation + sunshine, data= bike)
+msummary(model2)
+
+```
+
+```{r model_colinearity}
+model3 <- lm(bikes_hired ~ mean_temp + min_temp+ humidity + pressure + radiation  + precipitation + sunshine, data= bike)
+msummary(model3)
+vif(model3)
+check_model(model3)
+```
+
+```{r model_check_vif}
+model4 <- lm(bikes_hired ~ mean_temp + humidity + pressure + radiation  + precipitation + sunshine + 
+               season_name+ factor(year), data= bike)
+msummary(model4)
+vif(model4)
+```
+
+
+```{r add_season_year}
+model5 <- lm(bikes_hired ~ mean_temp + humidity + pressure + radiation  + precipitation + sunshine + season_name+ factor(year) + day_of_week, data= bike)
+msummary(model5)
+vif(model5)
+check_model(model5)
+```
+
+```{r compare}
+# produce summary table comparing models using huxtable::huxreg()
+huxreg(model1, model2, model3, model4, model5,
+       statistics = c('#observations' = 'nobs', 
+                      'R squared' = 'r.squared', 
+                      'Adj. R Squared' = 'adj.r.squared', 
+                      'Residual SE' = 'sigma'), 
+       bold_signif = 0.05, 
+       stars = NULL
+) %>% 
+  set_caption('Comparison of models')
 ```
 
 
