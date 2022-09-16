@@ -73,11 +73,21 @@ socialLinks:
 
 softSkills:
 - name: Product Management
-  percentage: 70
+  percentage: 80
   color: blue
 - name: Data Analytics
-  percentage: 60
+  percentage: 70
   color: yellow
 - name: GYM!
-  percentage: 60
+  percentage: 70
   color: orange
+- name: R
+  percentage: 80
+  color: pink
+- name: Python
+  percentage: 75
+  color: green
+- name: SQL
+  percentage: 80
+  color: sky
+  

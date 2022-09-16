@@ -65,7 +65,8 @@ library(ggfortify)
 ```{r load_data}
 #read the CSV file
 bike <- read_csv(here::here("dataset", "london_bikes.csv"), 
-                 show_col_types = FALSE)
+                 show_col_types = FALSE) %>% 
+  
 ```
 
 ### Cleaning & EDA
