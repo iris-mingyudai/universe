@@ -76,18 +76,18 @@ softSkills:
   percentage: 80
   color: blue
 - name: Data Analytics
-  percentage: 70
+  percentage: 75
   color: yellow
+- name: R & Python
+  percentage: 85
+  color: pink
+- name: SQL
+  percentage: 85
+  color: sky
 - name: GYM!
   percentage: 70
   color: orange
-- name: R
-  percentage: 80
-  color: pink
-- name: Python
-  percentage: 75
+- name: Cooking
+  percentage: 50
   color: green
-- name: SQL
-  percentage: 80
-  color: sky
   

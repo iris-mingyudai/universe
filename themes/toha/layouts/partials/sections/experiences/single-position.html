@@ -11,11 +11,11 @@
     </div>
     <!-- Add company overview -->
     <p>{{ .company.overview | markdownify }}</p>
-    <!-- Add the responsibilities handled at this position -->
-    {{ if $position.responsibilities }}
-    <h6 class="text-muted">{{ i18n "responsibilities" }}</h6>
+    <!-- Add the stories handled at this position -->
+    {{ if $position.stories }}
+    <h6 class="text-muted">{{ i18n "stories" }}</h6>
     <ul class="justify-content-around">
-    {{ range $position.responsibilities }}
+    {{ range $position.stories }}
         <li>{{ . | markdownify }}</li>
     {{ end }}
     </ul>

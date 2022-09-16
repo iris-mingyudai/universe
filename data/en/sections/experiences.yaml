@@ -6,37 +6,67 @@ section:
   weight: 3
   showOnNavbar: true
   # Can optionally hide the title in sections
-  # hideTitle: true 
+  hideTitle: true 
 
 # Your experiences
 experiences:
+- company:
+    name: Bytedance
+    url: "https://www.bytedance.com/en/"
+    location: Beijing, China
+    # company overview
+    overview: An international IT company with a wide range of products, including Douyin and TikTok.
+  positions:
+  - designation: Data Operations Intern
+    start: Jan 2021
+    # don't provide end date if you are currently working there. It will be replaced by "Present"
+    end: Apr 2021
+    # give some points about what was your responsibilities at the company.
+    stories:
+    - Learned to cooperate with a large team utilizing online docs and wrote a handover manual. 
+    - Looked forward to engaging with different types of products in the Internet industry.
+
+- company:
+    name: Tencent
+    url: "https://www.tencent.com/en-us/"
+    location: Beijing, China
+    overview: Tencent is a world-leading internet and technology company; the CSIG group focuses on cloud and industry Internet strategy.
+  positions:
+  - designation: Product Operations Intern
+    start: May 2021
+    end: Oct 2021
+    stories:
+    - The cloud database product. 
+    - Applied data science tools to find potential customers. 
+    
 - company:
     name: Xiaohongshu
     url: "https://www.xiaohongshu.com/"
     location: Beijing, China
     # company overview
-    overview: Example Co. is a widely recognized company for cloud-native development. It builds tools for Kubernetes.
+    overview: Xiaohongshu is a platform where people discover and connect with diverse lifestyles.
   positions:
   - designation: Strategic Product Management Intern
     start: Mar 2022
     # don't provide end date if you are currently working there. It will be replaced by "Present"
     end: Aug 2022
     # give some points about what was your responsibilities at the company.
-    responsibilities:
-    - xxx
-    - xxx
-    - xxx
-
+    stories:
+    - A role that combined all my career interests together (data analytics, platform products, lots of collaboration)
+    - Became (very) familiar with SQL, a SQL tutor (occasionally) of my team. 
+    - Led a project from the product demand evaluation stage to the development stage
 - company:
-    name: Tencent
-    url: "https://www.tencent.com/en-us/"
-    location: Beijing, China
-    overview: xxx
+    name: 
+    location: Universe
+    # company overview
+    overview: With passion and courage :-)
   positions:
-  - designation: Product Operations Intern
-    start: May 2021
-    end: Oct 2021
-    responsibilities:
-    - xxx
-    - xxx
-    - xxx
+  - designation: Exploring life and career 
+    start: Unknown
+    # don't provide end date if you are currently working there. It will be replaced by "Present"
+    end: 
+    # give some points about what was your responsibilities at the company.
+    # stories:
+    # - One day I'll have the opportunity to 
+    # - 
+    

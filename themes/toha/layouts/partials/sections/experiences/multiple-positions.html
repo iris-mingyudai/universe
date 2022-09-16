@@ -18,9 +18,9 @@
     {{ range $index,$position:= .positions }}
         <h6 class="designation">{{ $position.designation }}</h6>
         <p class="text-muted">{{ $position.start }} - {{if $position.end }} {{ $position.end }} {{else}} {{ i18n "present" }} {{end}}</p>
-        <!-- Add the responsibilities handled at this position -->
+        <!-- Add the stories handled at this position -->
         <ul class="justify-content-around">
-        {{ range $position.responsibilities }}
+        {{ range $position.stories }}
             <li>{{ . | markdownify }}</li>
         {{ end }}
         </ul>
