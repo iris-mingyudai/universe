@@ -17,10 +17,9 @@ math: true
 output: 
   toc: true
   html_document: 
-# hero: images/hero.svg
 ---
 
-```{r, setup, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   message = FALSE, 
   warning = FALSE, 
@@ -53,15 +52,19 @@ library(openintro)
 
 ```{r read_GDP_data}
 
-UN_GDP_data  <-  read_excel(here::here("dataset", "Download-GDPconstant-USD-countries.xls"), # Excel filename
-                sheet="Download-GDPconstant-USD-countr", # Sheet name
-                skip=2) # Number of rows to skip
+UN_GDP_data  <-  read_excel(
+  here::here(
+    "dataset",
+    "Download-GDPconstant-USD-countries.xls"), # Excel filename
+  sheet="Download-GDPconstant-USD-countr", # Sheet name
+  skip=2  # Number of rows to skip
+  )
 
 ```
 
 ## Data Cleaning
 
-The dataframe is in wide format: 
+The dataframe is in wide format:
 
 ```{r data_overview}
 head(UN_GDP_data)

@@ -1,5 +1,5 @@
 ---
-title: "London Bikes"
+title: "Excess rentals in TfL bike sharing"
 date: 2022-09-13T17:00:20+00:00
 description: Bike
 author:
@@ -7,7 +7,7 @@ author:
   image: images/author/iris-cartoon.png
 menu:
   sidebar:
-    name: Bikes
+    name: Excess rentals in bike sharing
     identifier: r-stat-bikes
     parent: R Statistics
     weight: 10
@@ -60,7 +60,7 @@ library(performance)
 library(ggfortify)
 ```
 
-## Excess rentals in TfL bike sharing
+## 
 
 Data: TfL data on how many bikes were hired every single day, from *London Data Store*
 
