@@ -13,10 +13,6 @@ menu:
     weight: 10
 tags: ["R", "Data Analytics"]
 categories: ["R"]
-math: true
-output: 
-  toc: true
-  html_document: 
 ---
 
 ```{r setup, include=FALSE}
@@ -35,6 +31,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+
 ```{r load-libraries, echo=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
@@ -48,6 +45,7 @@ library(broom)
 library(tidyquant)
 library(infer)
 library(openintro)
+library(blogdown)
 ```
 
 ```{r read_GDP_data}

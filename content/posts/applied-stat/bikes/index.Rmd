@@ -13,11 +13,6 @@ menu:
     weight: 10
 tags: ["R", "Data Analytics"]
 categories: ["R"]
-math: true
-output: 
-  toc: true
-  html_document: 
-# hero: images/hero.svg
 ---
 
 ```{r, setup, include=FALSE}
@@ -37,6 +32,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r load-libraries, include=FALSE}
+
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(mosaic)
 library(ggthemes)
@@ -58,9 +54,9 @@ library(huxtable)
 library(car)
 library(performance)
 library(ggfortify)
+library(blogdown)
 ```
 
-## 
 
 Data: TfL data on how many bikes were hired every single day, from *London Data Store*
 

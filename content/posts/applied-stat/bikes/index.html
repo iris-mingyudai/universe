@@ -1,0 +1,392 @@
+---
+title: "Excess rentals in TfL bike sharing"
+date: 2022-09-13T17:00:20+00:00
+description: Bike
+author:
+  name: Iris
+  image: images/author/iris-cartoon.png
+menu:
+  sidebar:
+    name: Excess rentals in bike sharing
+    identifier: r-stat-bikes
+    parent: R Statistics
+    weight: 10
+tags: ["R", "Data Analytics"]
+categories: ["R"]
+---
+
+
+
+<p>Data: TfL data on how many bikes were hired every single day, from <em>London Data Store</em></p>
+<pre class="r"><code>url &lt;- &quot;https://data.london.gov.uk/download/number-bicycle-hires/ac29363e-e0cb-47cc-a97a-e216d900a6b0/tfl-daily-cycle-hires.xlsx&quot;
+
+# Download TFL data to temporary file
+httr::GET(url, write_disk(bike.temp &lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
+<pre><code>## Response [https://airdrive-secure.s3-eu-west-1.amazonaws.com/london/dataset/number-bicycle-hires/2022-09-06T12%3A41%3A48/tfl-daily-cycle-hires.xlsx?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAJJDIMAIVZJDICKHA%2F20220913%2Feu-west-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20220913T184524Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=4c727237da25ed38a6594d4284f4384cea649f00c90f873663d5ca6e3f46a974&amp;X-Amz-SignedHeaders=host]
+##   Date: 2022-09-13 18:45
+##   Status: 200
+##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+##   Size: 180 kB
+## &lt;ON DISK&gt;  /var/folders/5j/t_7j4bts6w57kqmrq8g35sx80000gn/T//RtmpznBFD5/filebc8446abe4eb.xlsx</code></pre>
+<pre class="r"><code># Use read_excel to read it as dataframe
+bike0 &lt;- read_excel(bike.temp,
+                   sheet = &quot;Data&quot;,
+                   range = cell_cols(&quot;A:B&quot;))
+
+# change dates to get year, month, and week
+bike &lt;- bike0 %&gt;% 
+  clean_names() %&gt;% 
+  rename (bikes_hired = number_of_bicycle_hires) %&gt;% 
+  mutate (year = year(day),
+          month = lubridate::month(day, label = TRUE),
+          week = isoweek(day))</code></pre>
+<pre class="r"><code>glimpse(bike)</code></pre>
+<pre><code>## Rows: 4,416
+## Columns: 5
+## $ day         &lt;dttm&gt; 2010-07-30, 2010-07-31, 2010-08-01, 2010-08-02, 2010-08-0…
+## $ bikes_hired &lt;dbl&gt; 6897, 5564, 4303, 6642, 7966, 7893, 8724, 9797, 6631, 7864…
+## $ year        &lt;dbl&gt; 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010…
+## $ month       &lt;ord&gt; Jul, Jul, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug…
+## $ week        &lt;dbl&gt; 30, 30, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32…</code></pre>
+<pre class="r"><code>skimr::skim(bike)</code></pre>
+<table>
+<caption>(#tab:browse_data)Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">bike</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">4416</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">POSIXct</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="14%" />
+<col width="8%" />
+<col width="9%" />
+<col width="41%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">month</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">TRUE</td>
+<td align="right">12</td>
+<td align="left">Aug: 403, Jul: 374, Jan: 372, Mar: 372</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="15%" />
+<col width="8%" />
+<col width="8%" />
+<col width="5%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">bikes_hired</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">26844.3</td>
+<td align="right">9899.73</td>
+<td align="right">2764</td>
+<td align="right">19698</td>
+<td align="right">26607</td>
+<td align="right">34206</td>
+<td align="right">73094</td>
+<td align="left">▃▇▅▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2016.1</td>
+<td align="right">3.51</td>
+<td align="right">2010</td>
+<td align="right">2013</td>
+<td align="right">2016</td>
+<td align="right">2019</td>
+<td align="right">2022</td>
+<td align="left">▆▅▇▅▇</td>
+</tr>
+<tr class="odd">
+<td align="left">week</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">26.6</td>
+<td align="right">15.01</td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">27</td>
+<td align="right">40</td>
+<td align="right">53</td>
+<td align="left">▇▇▇▇▇</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: POSIXct</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="15%" />
+<col width="12%" />
+<col width="12%" />
+<col width="22%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">day</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2010-07-30</td>
+<td align="left">2022-08-31</td>
+<td align="left">2016-08-14 12:00:00</td>
+<td align="right">4416</td>
+</tr>
+</tbody>
+</table>
+<div id="bikes-hired-by-month-and-year-since-2015" class="section level2">
+<h2>Bikes hired by month and year since 2015</h2>
+<pre class="r"><code>bike %&gt;% 
+  filter(year &gt;= 2015) %&gt;% 
+  ggplot(aes(x = bikes_hired)) + 
+  geom_density() + 
+  facet_grid(vars(year), vars(month)) + 
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank(), 
+        axis.text.x = element_text(angle = 90, vjust = 1, hjust=1), 
+        axis.text = element_text(size = 8)) + 
+  scale_x_continuous(labels = scales::label_number(suffix = &quot;K&quot;, scale = 0.001)) + 
+  labs(x = &quot;Bikes Hired&quot;, y = &quot;&quot;, title = &quot;Distribution of bikes hired per month&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/tfl_month_year_grid-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="monthly-weekly-deviation-from-expected-level" class="section level2">
+<h2>Monthly &amp; Weekly Deviation from Expected Level</h2>
+<p>The code below creates a function to summary data with either <code>mean</code> or <code>median</code>, and then replicates graphs.</p>
+<pre class="r"><code>get_values &lt;- function(df, method, base_yr, target_yr) {
+  # method = mean, or method = median
+  # base_yr, e.g., c(2016, 2019)
+  
+  # summarize data by year &amp; week
+  by_week &lt;- df %&gt;% 
+    filter(year &gt;= target_yr[1] &amp; year &lt;= target_yr[2]) %&gt;% 
+    group_by(year, week) %&gt;% 
+    summarize(real = method(bikes_hired))
+  
+  # summarize data by year &amp; month
+  by_month &lt;- df %&gt;% 
+  filter(year &gt;= target_yr[1] &amp; year &lt;= target_yr[2]) %&gt;% 
+  group_by(year, month) %&gt;% 
+  summarize(real = method(bikes_hired))
+  
+  # weekly mean/median rentals across 2016~2019
+  by_week_base &lt;- df %&gt;% 
+    filter(year &gt;= base_yr[1] &amp; year &lt;= base_yr[2]) %&gt;% 
+    group_by(week) %&gt;% 
+    summarize(expected = method(bikes_hired))
+  
+  # monthly mean/median rentals across 2016~2019
+  by_month_base &lt;- df %&gt;% 
+    filter(year &gt;= base_yr[1] &amp; year &lt;= base_yr[2]) %&gt;% 
+    group_by(month) %&gt;% 
+    summarize(expected = method(bikes_hired))
+  
+  # joining real value and expected value, calculating excess amount and percentage changes
+  gen_relative &lt;- function(df1, df2, by_col){
+    joined &lt;- left_join(df1, df2, by = by_col) %&gt;% 
+      mutate(excess = real - expected, 
+             perc = (real - expected) / expected)
+    return(joined)
+  }
+  by_week &lt;- gen_relative(by_week, by_week_base, &quot;week&quot;) %&gt;% 
+    filter(!(year == 2022 &amp; week == 52))
+  by_month &lt;- gen_relative(by_month, by_month_base, &quot;month&quot;)
+
+  # graph title - median or average
+  if(method(c(1, 2, 3, 4, 5, 7)) == 3.5){  # if method() returns the median
+    kwd &lt;- &quot;median&quot;
+  } else {kwd &lt;- &quot;average&quot;}
+  
+  # graph1
+  p1 &lt;- by_month %&gt;% 
+  mutate(
+    ymax = ifelse(real &gt;= expected, real, expected), 
+    ymin = ifelse(expected &gt; real, real, expected)
+  ) %&gt;% 
+  ggplot(aes(x = month)) +
+    geom_line(aes(y = expected), group = 1, color = &quot;blue&quot;, size = 1) + 
+    geom_line(aes(y = real), group = 1, color = &quot;black&quot;, size = 0.5) + 
+    geom_ribbon(aes(ymin = expected, ymax = ymax, group = 1, fill=&quot;red&quot;), 
+                alpha = 0.5) + 
+    geom_ribbon(aes(ymin = ymin, ymax = expected, group = 1, fill=&quot;green&quot;), 
+                alpha = 0.5) + 
+    facet_wrap(~year) + 
+    labs(
+      title = &quot;Monthly changes in TfL bike rentals&quot;, 
+      subtitle = paste(&quot;Change from monthly &quot;, kwd, &quot; shown in blue and calculated between 2016-2019&quot;), 
+      caption = &quot;Source: TfL, London Data Store&quot;, 
+      y = paste(&quot;Bike Rentals (&quot;, kwd, &quot;)&quot;), 
+      x = &quot;&quot;
+    ) + 
+    scale_y_continuous(labels = scales::label_number(suffix = &quot;K&quot;, scale = 0.001)) + 
+    theme(aspect.ratio = 0.6, 
+          legend.position=&quot;none&quot;, 
+          panel.background = element_rect(fill = &quot;white&quot;), 
+          panel.grid = element_line(colour = &quot;light grey&quot;),
+          strip.background = element_blank(), 
+          axis.text.x = element_text(angle = 90, vjust = 1, hjust=1), 
+          axis.text = element_text(size = 8), 
+          axis.title = element_text(size = 8), 
+          plot.title = element_text(size = 10)
+          )
+  
+  # graph2
+  yaxes_min &lt;- min(by_week$perc)
+  p2 &lt;- by_week %&gt;% 
+    mutate(
+      ymax = ifelse(perc &gt;= 0, perc, 0), 
+      ymin = ifelse(0 &gt;= perc, perc, 0), 
+      colors = ifelse(perc &gt;= 0, &quot;red&quot;, &quot;green&quot;)
+    ) %&gt;% 
+    ggplot() + 
+    geom_line(aes(x = week, y = perc), group = 1, color = &quot;black&quot;, size = 0.5) + 
+    geom_ribbon(aes(x = week, ymin = ymin, ymax = 0, group = 1, fill=&quot;green&quot;), 
+                alpha = 0.5) + 
+    geom_ribbon(aes(x = week, ymin = 0, ymax = ymax, group = 1, fill=&quot;red&quot;), 
+                alpha = 0.5) + 
+    facet_wrap(~year) + 
+    labs(
+      title = &quot;Weekly changes in TfL bike rentals&quot;, 
+      subtitle = paste(&quot;% change from weekly&quot;, kwd, &quot;calculated between 2016-2019&quot;), 
+      caption = &quot;Source: TfL, London Data Store&quot;, 
+      y = &quot;&quot;, 
+      x = &quot;week&quot;
+    ) + 
+    scale_y_continuous(labels = scales::percent, limits = c(yaxes_min, 1.1)) + 
+    scale_x_discrete(limits=c(13, 26, 39, 53)) + 
+    annotate(geom = &quot;rect&quot;, xmin = 14, xmax = 26, ymin = -Inf, ymax = Inf, fill = &quot;grey&quot;, alpha = 0.3) + 
+    annotate(geom = &quot;rect&quot;, xmin = 40, xmax = 53, ymin = -Inf, ymax = Inf, fill = &quot;grey&quot;, alpha = 0.3) + 
+    geom_rug(mapping = aes(x = week, color = factor(colors), alpha = 0.5), sides = &quot;b&quot;) + 
+    theme(aspect.ratio = 0.6, 
+          legend.position=&quot;none&quot;, 
+          panel.background = element_rect(fill = &quot;white&quot;), 
+          panel.grid = element_line(colour = &quot;light grey&quot;), 
+          strip.background = element_blank(), 
+          axis.text = element_text(size = 8), 
+          axis.title = element_text(size = 8), 
+          plot.title = element_text(size = 10)
+          )
+  p1 / p2
+}</code></pre>
+<p>Clarification</p>
+<ul>
+<li><p>For the <strong>“Monthly change from monthly average”</strong> graph,</p>
+<ul>
+<li>The expected average or median monthly rentals are calculated using each month’s records, regardless of year</li>
+</ul></li>
+<li><p>For the <strong>“Weekly change from weekly average”</strong> graph,</p>
+<ul>
+<li><p>The average or median weekly rentals are calculated using each week’s records, regardless of year</p></li>
+<li><p>The two grey shaded rectangles correspond to Q2 (weeks 14-26) and Q4 (weeks 40-52).</p></li>
+</ul></li>
+</ul>
+<pre class="r"><code>get_values(bike, mean, c(2016, 2019), c(2017, 2022))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/result_bike_graph-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>get_values(bike, median, c(2016, 2019), c(2017, 2022))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/result_bike_graph-2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Although results using <code>mean</code> and <code>median</code> are similar, the average method is theoretically more suitable for evaluating expected rentals and %changes. Significant %changes are largely due to rentals surge on a few special days. The average value captures extremes while the median usually cannot.</p>
+<blockquote>
+<p>Reference</p>
+</blockquote>
+<ul>
+<li><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_ribbon.html</a></li>
+<li><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_tile.html</a></li>
+<li><a href="https://ggplot2.tidyverse.org/reference/geom_rug.html" class="uri">https://ggplot2.tidyverse.org/reference/geom_rug.html</a></li>
+</ul>
+</div>

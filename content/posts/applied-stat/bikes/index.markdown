@@ -13,18 +13,12 @@ menu:
     weight: 10
 tags: ["R", "Data Analytics"]
 categories: ["R"]
-math: true
-output: 
-  toc: true
-  html_document: 
-# hero: images/hero.svg
 ---
 
 
 
 
 
-## 
 
 Data: TfL data on how many bikes were hired every single day, from *London Data Store*
 
