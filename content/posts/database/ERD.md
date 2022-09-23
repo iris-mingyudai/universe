@@ -8,7 +8,7 @@ author:
 menu:
   sidebar:
     name: Entity Relationship Diagram
-    identifier: erd
+    identifier: database-erd
     parent: Database
     weight: 10
 tags: ["Database", "ERD"]
