@@ -15,4 +15,26 @@ tags: ["Database", "ERD"]
 categories: ["Database"]
 ---
 
-xxx
+# ERD Components
+
+- **entities**: represented by boxes
+    - an object that will have many instances in the database and will be composed of multiple **attributes**
+    - naming suggestion: singular noun, concise or use abbrv, ...
+- **attribute**: each entiry has multiple attributes
+- **relationships**: how entiries interact with each other, represented by lines between the boxes
+
+## Types of entity
+
+
+types of relationships among entities
+- one
+- many
+- one (and only one)
+- zero or one
+- one or many
+- zero or many
+
+# Reference
+
+- [Entity Relationship Diagram (ERD) Tutorial - Part 1 (YouTube)](https://www.youtube.com/watch?v=QpdhBUYk7Kk)
+- [Entity Relationship Diagram (ERD) Tutorial - Part 2 (YouTube)](https://www.youtube.com/watch?v=-CuY5ADwn24)
