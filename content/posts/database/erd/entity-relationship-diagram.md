@@ -10,7 +10,7 @@ menu:
   sidebar:
     name: ERD
     identifier: entity-relationship-diagram
-    parent: Database
+    parent: database
     weight: 10
 tags: ["Database", "ERD"]
 categories: ["Database"]
