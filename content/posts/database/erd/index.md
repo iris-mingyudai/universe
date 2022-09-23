@@ -2,6 +2,7 @@
 title: "Entity Relationship Diagram"
 date: 2022-09-23T12:21:37+00:00
 description: ERD
+theme: Toha
 author:
   name: Iris
   image: images/author/iris-cartoon.png
