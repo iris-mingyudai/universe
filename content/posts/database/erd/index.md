@@ -36,6 +36,10 @@ types of relationships among entities
 - one or many
 - zero or many
 
+## Types of Key
+
+`primary key`
+
 # Reference
 
 - [Entity Relationship Diagram (ERD) Tutorial - Part 1 (YouTube)](https://www.youtube.com/watch?v=QpdhBUYk7Kk)
