@@ -36,7 +36,7 @@ types of relationships among entities
 - one or many
 - zero or many
 
-![relationships](images/relationships.jpg)
+![relationships](image/relationships.jpg)
 
 ## Types of Key
 `primary key`: an attribute (or field) that *uniquely* identifies every record in a certain table
