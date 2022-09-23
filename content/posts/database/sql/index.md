@@ -1,6 +1,6 @@
 ---
 title: "MySQL basic usage"
-date: 2022-09-23T13:44:28+00:00
+date: 2022-09-23T13:47:28+00:00
 description: MySQL basic usage
 theme: Toha
 author:
