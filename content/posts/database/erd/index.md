@@ -36,7 +36,11 @@ types of relationships among entities
 - one or many
 - zero or many
 
-![relationships](image/relationships.jpg)
+### `ERD Cardinality` <br>
+![relationships](image/relationships.jpg)<br>
+
+A brief explanation: let's focus on the "0 to many" sign - the tiny circle indicates the min number of links, which the "crow's feet" indicates the max number of links (i.e., can be any number)<br>
+So when the first sign (the left one) is a short line, there has to be at least one existing link.
 
 ## Types of Key
 `primary key`: an attribute (or field) that *uniquely* identifies every record in a certain table
