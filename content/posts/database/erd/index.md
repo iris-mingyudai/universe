@@ -19,11 +19,11 @@ categories: ["Database"]
 
 # ERD Components
 
-- **entities**: represented by boxes
-    - an object that will have many instances in the database and will be composed of multiple **attributes**
+- `entities`: represented by boxes
+    - an object that will have many instances in the database and will be composed of multiple `attributes`
     - naming suggestion: singular noun, concise or use abbrv, ...
-- **attribute**: each entiry has multiple attributes
-- **relationships**: how entiries interact with each other, represented by lines between the boxes
+- `attribute`: each entiry has multiple attributes
+- `relationships`: how entiries interact with each other, represented by lines between the boxes
 
 ## Types of entity
 
@@ -36,9 +36,12 @@ types of relationships among entities
 - one or many
 - zero or many
 
-## Types of Key
+![relationships](images/relationships.jpg)
 
-`primary key`
+## Types of Key
+`primary key`: an attribute (or field) that *uniquely* identifies every record in a certain table
+- thus, one primary key per entity
+- `RULES: unique, never changing, never null`
 
 # Reference
 
